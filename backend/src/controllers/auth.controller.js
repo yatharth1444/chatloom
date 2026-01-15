@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
+import {sendWelcomeEmail} from '../emails/emailHandlers.js'
 export  const authcontroller =  async(req, res)=>{
     const {fullname, email, password}  = req.body
     try {
@@ -31,12 +32,17 @@ export  const authcontroller =  async(req, res)=>{
         if(newUser){
             const savedUser = await newUser.save()
             generateToken(savedUser._id, res)
-            return res.status(201).json({
+            res.status(201).json({
                 _id: newUser._id,
                 fullname: newUser.fullname,
                 email: newUser.email,
                 profilePic : newUser.profilePic,
             })
+            try {
+            await sendWelcomeEmail(savedUser.fullname, savedUser.email, process.env.CLIENT_URL)
+            } catch (error) {
+            console.error("Failed to send welcome email:", error);
+            }
         }else{
             res.status(400).json({message: "invalid user data"})
         }
