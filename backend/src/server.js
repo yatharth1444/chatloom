@@ -4,11 +4,12 @@ import authRoutes from './routes/auth.route.js'
 import messageRoutes from './routes/message.route.js'
 import path from 'path'
 import { connectdb } from './lib/db.js'
+import { error } from 'console'
 dotenv.config()
 const __dirname = path.resolve()
 const port = process.env.PORT
 const server = express()
-server.use(express.json())
+server.use(express.json()) 
 server.use('/api/auth', authRoutes)
 if(process.env.NODE_ENV === 'production'){
     server.use(express.static(path.join (__dirname, "../../frontend/dist")))
@@ -18,7 +19,12 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 server.use('/routes/message', messageRoutes)
-server.listen((port), ()=> {
+connectdb()
+    .then(()=>{
+    server.listen((port), ()=> {
     console.log(`Server listens at port ${port} `)
-    connectdb()
+})})
+    .catch((error)=>{
+    console.log("ailed to connect DB");
+    
 })
