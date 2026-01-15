@@ -11,6 +11,6 @@ export const sendWelcomeEmail = async (name, email, clientURL) => {
         console.error("error sending email", error)
         throw new Error("Failed to send welcome email")
     }
-    console.log("Welcome email sent");
+    console.log("Welcome email sent",data);
     
 }

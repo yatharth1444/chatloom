@@ -1,8 +1,8 @@
-import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
 import {sendWelcomeEmail} from '../emails/emailHandlers.js'
+import { ENV } from "../lib/env.js";
 export  const authcontroller =  async(req, res)=>{
     const {fullname, email, password}  = req.body
     try {
@@ -39,7 +39,7 @@ export  const authcontroller =  async(req, res)=>{
                 profilePic : newUser.profilePic,
             })
             try {
-            await sendWelcomeEmail(savedUser.fullname, savedUser.email, process.env.CLIENT_URL)
+            await sendWelcomeEmail(savedUser.fullname, savedUser.email, ENV.CLIENT_URL)
             } catch (error) {
             console.error("Failed to send welcome email:", error);
             }
