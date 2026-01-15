@@ -1,13 +1,9 @@
 import express from "express"
-
+import { authcontroller } from "../controllers/auth.controller.js"
 const router = express.Router()
-router.get('/login', (req, res)=>{
-    res.send('login endpoint')
-})
 
-router.get('/signup', (req, res)=>{
-    res.send('signup endpoint')
-})
+
+router.post('/signup', authcontroller)
 
 
 router.get('/logout', (req, res)=>{
