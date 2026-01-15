@@ -1,5 +1,7 @@
 import  jwt  from "jsonwebtoken"
 export const generateToken = (userId, res) =>{
+    const {JWT_SECRET_KEY} = process.env
+    if(!JWT_SECRET_KEY) throw new Error ("JWT SECRET KEY not configured")
     const token = jwt.sign({userId: userId}, process.env.JWT_SECRET_KEY, {
         expiresIn: "7d"
     })
