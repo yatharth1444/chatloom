@@ -55,6 +55,9 @@ export  const authcontroller =  async(req, res)=>{
 }
 export const loginController = async(req, res)=>{
     const {email, password} = req.body
+    if (!email || !password){
+        res.status(400).json({message: "Either password or email is not provided."})
+    }
     try {
         const user = await User.findOne({email})
         if(!user){
