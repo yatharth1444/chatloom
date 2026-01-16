@@ -17,7 +17,7 @@ export  const authcontroller =  async(req, res)=>{
         if(!emailRegex.test(email)){
             return res.status(400).json({message: "Enter valid mail."})
         }
-        const user = await User.findOne({email})
+        const user = await User.findOne({email: email})
         if(user){
             return res.status(400).json({message: "User already exists"})
             
@@ -52,4 +52,31 @@ export  const authcontroller =  async(req, res)=>{
         console.log("error in signup", error);
         
     }
+}
+export const loginController = async(req, res)=>{
+    const {email, password} = req.body
+    try {
+        const user = await User.findOne({email})
+        if(!user){
+            return res.status(400).json({message: "Invalid credentials"})
+        }
+        const isPassword = await bcrypt.compare(password, user.password)
+        if(!isPassword) return res.status(400).json({message: "Invalid credentials"})
+        generateToken(user._id, res)
+        res.status(201).json({
+                _id: user._id,
+                fullname: user.fullname,
+                email: user.email,
+                profilePic : user.profilePic,
+            })
+    } catch (error) {
+        console.log("error in login", error);
+        res.status(500).json({message: "internal server error"})
+        
+    }
+}
+
+export const logoutController = (_, res) =>{
+    res.cookie("jwt", "", {maxAge: 0})
+    res.status(200).json({message: "Logout successfull"})
 }
