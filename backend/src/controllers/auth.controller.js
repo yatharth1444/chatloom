@@ -63,7 +63,7 @@ export const loginController = async(req, res)=>{
         const isPassword = await bcrypt.compare(password, user.password)
         if(!isPassword) return res.status(400).json({message: "Invalid credentials"})
         generateToken(user._id, res)
-        res.status(201).json({
+        res.status(200).json({
                 _id: user._id,
                 fullname: user.fullname,
                 email: user.email,
@@ -78,5 +78,5 @@ export const loginController = async(req, res)=>{
 
 export const logoutController = (_, res) =>{
     res.cookie("jwt", "", {maxAge: 0})
-    res.status(200).json({message: "Logout successfull"})
+    res.status(200).json({message: "Logout successful"})
 }
