@@ -4,10 +4,12 @@ import messageRoutes from './routes/message.route.js'
 import path from 'path'
 import { connectdb } from './lib/db.js'
 import { ENV } from './lib/env.js'
+import cookieParser from "cookie-parser"
 const __dirname = path.resolve()
 const port = ENV.PORT
 const server = express()
-server.use(express.json()) 
+server.use(express.json())
+server.use(cookieParser())
 server.use('/api/auth', authRoutes)
 if(ENV.NODE_ENV === 'production'){
     server.use(express.static(path.join (__dirname, "../../frontend/dist")))

@@ -18,5 +18,7 @@
   "bugs": {
     "url": "https://github.com/yatharth1444/chatloom/issues"
   },
-  "homepage": "https://github.com/yatharth1444/chatloom#readme"
+  "homepage": "https://github.com/yatharth1444/chatloom#readme",
+  "dependencies": {
+  }
 }
