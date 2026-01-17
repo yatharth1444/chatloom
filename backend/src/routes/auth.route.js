@@ -1,9 +1,11 @@
 import express from "express"
+import {arcjetProtection} from "../middlewares/arcjet.middleware.js"
 import { authcontroller, loginController, logoutController, updateProfileController} from "../controllers/auth.controller.js"
 import {protectRoute} from '../middlewares/authentication.middleware.js'
+
 const router = express.Router()
 
-
+router.use(arcjetProtection)
 router.post('/signup', authcontroller)
 
 router.post('/login', loginController)
