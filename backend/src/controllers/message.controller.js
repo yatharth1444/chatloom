@@ -1,6 +1,6 @@
 import Message from "../models/message.js";
 import User from "../models/User.js";
-import cloudinary from "cloudinary"
+import cloudinary from "../lib/cloudinary.js"
 export const getAllUsers = async(req, res) => {
     try {
         const loggedInUser = req.user._id
@@ -15,13 +15,14 @@ export const getMessageByUserId = async(req, res) =>{
     const {id: userToChatId} = req.params
     const myId = req.user._id
     try {
-    const findUser = await User.find({
-        $or:[
-            {senderId: myId, receiverId: userToChatId},
-            {senderId: userToChatId, receiverId:myId },
-        ]
-    })
-    res.status(201).json(findUser)
+    const messages = await Message.find({
+    $or: [
+    { senderId: myId, receiverId: userToChatId },
+    { senderId: userToChatId, receiverId: myId },
+    ]
+}).sort({ createdAt: 1 });
+
+    res.status(200).json(messages)
 } catch (error) {
     console.log("error", error);
     res.status(500).json({message:"Internal Server error"})
@@ -35,7 +36,7 @@ try {
     if(!text && !image){
         return res.status(400).json({message: "No text provided to be sent"})
     }
-    if(senderId === receiverId){
+    if(senderId.equals(receiverId)){
         return res.status(400).json({message: "cant send message to yourself"})
     }
     const receiverExists = await User.exists({_id : receiverId})
@@ -66,11 +67,11 @@ export const getChatPartners = async (req, res) => {
         const chatPartnersMessage = await Message.find({$or: [{senderId: loggedInUser}, {receiverId: loggedInUser}]})
         const chatPartnersIds = [
             ...new Set(
-                chatPartnersMessage.map((msg)=>{
+                chatPartnersMessage.map((msg)=>
                     msg.senderId.toString() === loggedInUser.toString()
                     ? msg.receiverId.toString()
                     : msg.senderId.toString()
-                })
+                )
             )
         ]
         const chatPartners = await User.find({_id: {$in: chatPartnersIds}}).select('-password')
