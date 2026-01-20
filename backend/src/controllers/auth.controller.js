@@ -14,14 +14,12 @@ export  const authcontroller =  async(req, res)=>{
             return res.status(400).json({message: "Entered password should be atleast 6 characters "})
         }
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-
         if(!emailRegex.test(email)){
             return res.status(400).json({message: "Enter valid mail."})
         }
         const user = await User.findOne({email: email})
         if(user){
             return res.status(400).json({message: "User already exists"})
-            
         }
         const salt = await bcrypt.genSalt(10)
         const hassedPassword = await bcrypt.hash(password, salt)
@@ -47,8 +45,6 @@ export  const authcontroller =  async(req, res)=>{
         }else{
             res.status(400).json({message: "invalid user data"})
         }
-
-
     } catch (error) {
         console.log("error in signup", error);
         
@@ -79,12 +75,10 @@ export const loginController = async(req, res)=>{
         
     }
 }
-
 export const logoutController = (_, res) =>{
     res.cookie("jwt", "", {maxAge: 0})
     res.status(200).json({message: "Logout successful"})
 }
-
 export const updateProfileController = async(req, res)=>{
     try {
         const {profilePic} = req.body

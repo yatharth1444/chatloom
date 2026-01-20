@@ -11,6 +11,7 @@ const server = express()
 server.use(express.json())
 server.use(cookieParser())
 server.use('/api/auth', authRoutes)
+server.use("/api/messages", messageRoutes)
 if(ENV.NODE_ENV === 'production'){
     server.use(express.static(path.join (__dirname, "../../frontend/dist")))
     server.get("*", (req, res)=>{
