@@ -11,6 +11,7 @@ export const getAllUsers = async(req, res) => {
         res.status(500).json({message : "Internal server error"})
     }
 }
+
 export const getMessageByUserId = async(req, res) =>{
     const {id: userToChatId} = req.params
     const myId = req.user._id
