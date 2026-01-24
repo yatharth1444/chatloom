@@ -20,5 +20,6 @@
   },
   "homepage": "https://github.com/yatharth1444/chatloom#readme",
   "dependencies": {
+    "lucide-react": "^0.563.0"
   }
 }

@@ -10,9 +10,12 @@ export  const authcontroller =  async(req, res)=>{
         if(!fullname){
             return res.status(400).json({message: "Enter fullname "})
         }
-        if(password.length < 6){
-            return res.status(400).json({message: "Entered password should be atleast 6 characters "})
+        if (!password || password.length < 6) {
+            return res.status(400).json({
+                message: "Password must be at least 6 characters"
+        });
         }
+
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         if(!emailRegex.test(email)){
             return res.status(400).json({message: "Enter valid mail."})
