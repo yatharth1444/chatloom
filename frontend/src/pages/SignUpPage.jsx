@@ -17,7 +17,6 @@ function SignUpPage() {
         password: "",
     });
     const { signup, isSigningUp } = authStore();
-
     const handleSubmit = (e) => {
         e.preventDefault();
         signup(formData);
@@ -76,7 +75,7 @@ function SignUpPage() {
                                     <div>
                                         <label className="auth-input-label">Password</label>
                                         <div className="relative">
-                                            <MailIcon className="auth-input-icon" />
+                                            <LockIcon className="auth-input-icon" />
                                             <input
                                                 type="password"
                                                 value={formData.password}
@@ -112,7 +111,7 @@ function SignUpPage() {
                         <div className="hidden md:w-1/2 md:flex items-center justify-center p-6 bg-gradient-to-bl from-slate-800/20 to-transparent">
                             <div>
                                 <img
-                                    src="/signup.png"
+                                    src='../../../public/signup.png'
                                     alt="People using mobile devices"
                                     className="w-full h-auto object-contain"
                                 />
