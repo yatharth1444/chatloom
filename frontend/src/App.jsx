@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {Routes, Route, Navigate} from 'react-router'
 import ChatPage from "./pages/ChatPage"
 import SignUpPage from "./pages/SignUpPage"
-import {LoginPage} from "./pages/LoginPage"
+import LoginPage from "./pages/LoginPage"
 import { authStore } from './store/authStore.js'
 import {PageLoader} from './components/PageLoader.jsx'
 import {Toaster} from 'react-hot-toast'
