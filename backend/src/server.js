@@ -20,8 +20,6 @@ if(ENV.NODE_ENV === 'production'){
         res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"))
     })
 }
-
-server.use('/routes/message', messageRoutes)
 connectdb()
     .then(()=>{
     server.listen((port), ()=> {
