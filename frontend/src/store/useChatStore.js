@@ -10,9 +10,9 @@ export const chatStore = create( (set, get) => ({
     selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
-    isSoundEnabled: localStorage.getItem("isSoundEnabled") === true,
+    isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) === true,
     toggleSound : ()=>{
-        localStorage.set("isSoundEnabled", !get().isSoundEnabled)
+        localStorage.setItem("isSoundEnabled", JSON.stringify(!get().isSoundEnabled))
         set({isSoundEnabled : !get().isSoundEnabled})
     },
     setActiveTab : (tab)=> set({activeTab: tab}),
@@ -34,7 +34,7 @@ export const chatStore = create( (set, get) => ({
         set({isUsersLoading : true})
         try {
             const res =  await axiosInstance.get("/messages/chats")
-            set({messages: res.data})
+            set({chats: res.data})
             toast.success("fetched chat partners ")
         } catch (error) {
             console.error(error);
