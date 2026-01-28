@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser"
 const __dirname = path.resolve()
 const port = ENV.PORT
 const server = express()
-server.use(express.json())
+server.use(express.json({ limit: "5mb" })); 
 server.use(cors({credentials: true, origin: ENV.CLIENT_URL}))
 server.use(cookieParser())
 server.use('/api/auth', authRoutes)
